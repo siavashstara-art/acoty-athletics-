@@ -1,6 +1,7 @@
-import React from 'react';
-import { Eye, Volume2, VolumeX, Sparkles, UserCheck, LogIn, Menu, X, Search } from 'lucide-react';
-import { AdhdSettings, GymWhiteLabelConfig, UserProfile } from '../types/index.ts';
+import React, { useState } from 'react';
+import { Eye, Globe, Accessibility, Volume2, VolumeX, Sparkles, UserCheck, LogIn, Menu, X, Search } from 'lucide-react';
+import { AdhdSettings, GymWhiteLabelConfig, UserProfile, Language } from '../types/index.ts';
+import { soundAndSpeech } from '../utils/soundAndSpeech.ts';
 
 interface HeaderStampProps {
   whiteLabel: GymWhiteLabelConfig;
@@ -15,7 +16,32 @@ interface HeaderStampProps {
   setActiveTab: (tab: string) => void;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
+  currentLang?: Language;
+  onSelectLang?: (lang: Language) => void;
 }
+
+interface LanguageOption {
+  code: Language;
+  nameFa: string;
+  flag: string;
+}
+
+const SUPPORTED_LANGUAGES: LanguageOption[] = [
+  { code: 'fa', nameFa: 'فارسی', flag: '🇮🇷' },
+  { code: 'en', nameFa: 'English', flag: '🇬🇧' },
+  { code: 'ar', nameFa: 'العربية', flag: '🇸🇦' },
+  { code: 'tr', nameFa: 'Türkçe', flag: '🇹🇷' },
+  { code: 'es', nameFa: 'Español', flag: '🇪🇸' },
+  { code: 'fr', nameFa: 'Français', flag: '🇫🇷' },
+  { code: 'de', nameFa: 'Deutsch', flag: '🇩🇪' },
+  { code: 'ru', nameFa: 'Русский', flag: '🇷🇺' },
+  { code: 'zh', nameFa: '中文', flag: '🇨🇳' },
+  { code: 'ja', nameFa: '日本語', flag: '🇯🇵' },
+  { code: 'ko', nameFa: '한국어', flag: '🇰🇷' },
+  { code: 'hi', nameFa: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'ur', nameFa: 'اردو', flag: '🇵🇰' },
+  { code: 'ku', nameFa: 'کوردی', flag: '☀️' }
+];
 
 export const HeaderStamp: React.FC<HeaderStampProps> = ({
   whiteLabel,
@@ -29,10 +55,19 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   activeTab,
   setActiveTab,
   isMobileMenuOpen,
-  setIsMobileMenuOpen
+  setIsMobileMenuOpen,
+  currentLang = 'fa',
+  onSelectLang
 }) => {
+  const [selectedLang, setSelectedLang] = useState<Language>(currentLang);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+
   const primaryItems = [
     { id: 'deep-muscles', label: '🫁 پرزنت حضوری باشگاه‌ها، قامت و چشم (اصلی)' },
+    { id: 'gym-music', label: '🎧 رادیو DJ و آهنگ‌های ورزشی بدون کپی‌رایت' },
+    { id: 'master-bank', label: '🏋️‍♂️🏆 مرجع جامع حرکات، پاورلیفتینگ و قهرمانان' },
+    { id: 'weight-cutting', label: '🤼‍♂️🥊 پروتکل علمی سر وزن آمدن کشتی و رزمی' },
+    { id: 'pr-tracker', label: '📊🏆 ثبت رکوردهای ورزشی شخصی (PR Tracker)' },
     { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و بازی‌های فکری (پیشگیری آلزایمر)' },
     { id: 'blog', label: '📰 مجله و وبلاگ علمی تخصصی (جدید)' },
     { id: 'ads', label: '📢 مرکز تبلیغات و اسپانسرینگ (جدید)' },
@@ -45,6 +80,9 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   ];
 
   const vipItems = [
+    { id: 'gym-music', label: '🎧 رادیو DJ آهنگ‌های هیجانی باشگاه (بدون کپی‌رایت)' },
+    { id: 'weight-cutting', label: '🤼‍♂️🥊 پروتکل علمی سر وزن آمدن کشتی و رزمی' },
+    { id: 'pr-tracker', label: '📊🏆 ثبت رکوردهای ورزشی شخصی (PR Tracker)' },
     { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و ۴ بازی فکری (پیشگیری آلزایمر)' },
     { id: 'blog', label: '📰 مجله علمی تخصصی (حقوق، روانشناسی، ترک اعتیاد)' },
     { id: 'ads', label: '📢 جذب اسپانسرینگ، تجهیزات و برندهای مکمل' },
@@ -58,14 +96,56 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
     { id: 'promo', label: '🎬 استودیوی سناریوی تبلیغاتی آپارات' }
   ];
 
+  const activeLangObj = SUPPORTED_LANGUAGES.find(l => l.code === selectedLang) || SUPPORTED_LANGUAGES[0];
+
   return (
     <header className="sticky top-0 z-50 bg-[#09090b]/95 backdrop-blur-md border-b border-[#d4af37]/30 transition-all">
-      {/* Official Header Stamp according to Ecosystem Directive 7 */}
-      <div className="bg-gradient-to-r from-[#aa820a]/20 via-[#d4af37]/15 to-[#aa820a]/20 border-b border-[#d4af37]/20 py-1.5 px-3 text-center text-[10px] md:text-xs text-[#d4af37] font-semibold tracking-wide flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-        <span className="truncate">
-          اکوسیستم آفرینش آفرینا شهر جدید نیو متاورسی جهان ایبل سیتی (توانا سیتی) - FB NewMeta EbarCity Athletics
-        </span>
+      {/* Official Header Stamp & Multi-Language Flag Bar */}
+      <div className="bg-gradient-to-r from-[#aa820a]/20 via-[#d4af37]/15 to-[#aa820a]/20 border-b border-[#d4af37]/20 py-1.5 px-3 flex items-center justify-between text-[10px] md:text-xs text-[#d4af37] font-semibold tracking-wide">
+        <div className="flex items-center gap-2 truncate">
+          <Sparkles className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
+          <span className="truncate">
+            اکوسیستم آفرینش آفرینا شهر جدید نیو متاورسی جهان ایبل سیتی (توانا سیتی) - FB NewMeta EbarCity Athletics
+          </span>
+        </div>
+
+        {/* Multi-Language Flag Selector (14 Languages) */}
+        <div className="relative shrink-0">
+          <button
+            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+            className="flex items-center gap-1.5 bg-[#181820] hover:bg-zinc-800 border border-[#d4af37]/50 px-2 py-1 rounded-lg text-xs text-white transition-all shadow-sm"
+          >
+            <span>{activeLangObj.flag}</span>
+            <span className="font-bold">{activeLangObj.nameFa}</span>
+          </button>
+
+          {isLangDropdownOpen && (
+            <div className="absolute left-0 sm:right-0 mt-1 w-44 bg-[#121217] border border-[#d4af37]/40 rounded-xl shadow-2xl py-1 z-50 max-h-60 overflow-y-auto no-scrollbar">
+              <div className="px-3 py-1.5 text-[10px] text-zinc-400 border-b border-zinc-800 font-bold">
+                انتخاب زبان (Multi-Language):
+              </div>
+              {SUPPORTED_LANGUAGES.map(lang => (
+                <button
+                  key={lang.code}
+                  onClick={() => {
+                    setSelectedLang(lang.code);
+                    setIsLangDropdownOpen(false);
+                    if (onSelectLang) onSelectLang(lang.code);
+                    soundAndSpeech.playTick();
+                  }}
+                  className={`w-full text-right px-3 py-2 text-xs flex items-center gap-2 transition-all ${
+                    selectedLang === lang.code
+                      ? 'bg-[#d4af37]/20 text-[#d4af37] font-bold'
+                      : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                  }`}
+                >
+                  <span className="text-sm">{lang.flag}</span>
+                  <span>{lang.nameFa}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Main Navigation Bar */}
@@ -92,7 +172,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
 
         {/* Clean Primary Navigation Items for Desktop */}
         <nav className="hidden xl:flex items-center gap-1 text-xs font-medium">
-          {primaryItems.slice(0, 4).map((item) => (
+          {primaryItems.slice(0, 3).map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
@@ -107,8 +187,22 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
           ))}
         </nav>
 
-        {/* Accessibility, Search & Drawer Trigger */}
+        {/* Accessibility (Disability & ADHD Icon Badge), Search & Drawer Trigger */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Disability & ADHD Accessibility Badge (مخصوص معلولین و ADHD) */}
+          <button
+            onClick={onToggleAdhd}
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+              adhdSettings.isEnabled
+                ? 'bg-amber-500 text-black border-amber-400 shadow-md'
+                : 'bg-[#181820] text-amber-300 border-amber-500/30 hover:bg-zinc-800'
+            }`}
+            title="حالت دسترس‌پذیری معلولین و تمرکز ADHD"
+          >
+            <Accessibility className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">معلولین & ADHD</span>
+          </button>
+
           {/* Global Search & Guide Button */}
           {onOpenSearch && (
             <button

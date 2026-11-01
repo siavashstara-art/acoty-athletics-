@@ -33,9 +33,10 @@ export const SportsNutritionAndMetabolism: React.FC<SportsNutritionAndMetabolism
   setUserProfile,
   onProceedNext
 }) => {
-  const [activeTab, setActiveTab] = useState<'macros' | 'systems' | 'timing' | 'supplements'>('macros');
+  const [activeTab, setActiveTab] = useState<'macros' | 'systems' | 'timing' | 'supplements' | 'hub'>('macros');
   const [selectedSystemId, setSelectedSystemId] = useState<string>(ENERGY_SYSTEMS_DATA[0].id);
   const [selectedSuppId, setSelectedSuppId] = useState<string>(SAFE_SUPPLEMENTS_DATA[0].id);
+  const [nutritionProtocol, setNutritionProtocol] = useState<'high_protein' | 'high_carb' | 'crash_diet' | 'peak_week'>('high_protein');
   const [notification, setNotification] = useState('');
 
   // Interactive Macro & TDEE Calculator State
@@ -167,6 +168,21 @@ export const SportsNutritionAndMetabolism: React.FC<SportsNutritionAndMetabolism
         >
           <Award className="w-4 h-4" />
           <span>۴. مکمل‌های گرید A علمی</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab('hub');
+            soundAndSpeech.playTick();
+          }}
+          className={`flex-1 min-w-[140px] py-3 text-xs sm:text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
+            activeTab === 'hub'
+              ? 'bg-gradient-to-r from-yellow-500 to-amber-600 text-black shadow-md'
+              : 'text-zinc-400 hover:text-white'
+          }`}
+        >
+          <Salad className="w-4 h-4" />
+          <span>۵. مرجع رژیم‌ها و پروتکل مسابقه</span>
         </button>
       </div>
 
@@ -578,6 +594,105 @@ export const SportsNutritionAndMetabolism: React.FC<SportsNutritionAndMetabolism
 
             <div className="bg-gradient-to-r from-[#d4af37]/10 via-[#d4af37]/5 to-transparent border-r-4 border-[#d4af37] p-3 rounded-xl text-amber-200">
               <strong>نکته متدولوژی خدمات‌جو (اس‌ئی امیری):</strong> {selectedSupp.proTipFa}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PILLAR 5: EBAR CITY NUTRITION HUB & PEAK PROTOCOLS */}
+      {activeTab === 'hub' && (
+        <div className="space-y-6 animate-in fade-in">
+          <div className="card border-2 border-[#d4af37] bg-gradient-to-b from-[#121216] to-[#1a1509] rounded-2xl p-5 shadow-2xl">
+            <div className="space-y-4">
+              <h3 className="text-base font-bold text-[#d4af37] flex items-center gap-2">
+                <Salad className="w-5 h-5 text-amber-400" />
+                <span>مرجع تخصصی رژیم‌های بدنسازی و پروتکل‌های مسابقه (Peak Week)</span>
+              </h3>
+              <p className="text-xs text-zinc-300 leading-relaxed">
+                راهنمای کامل تغذیه، رژیم‌های کاهش و افزایش وزن، اردوهای تیمی، و جادوی پمپاژ روز مسابقه در متدولوژی خدمات‌جو:
+              </p>
+
+              {/* Protocol Select Dropdown */}
+              <div className="space-y-1.5">
+                <label className="text-xs text-[#d4af37] font-semibold block">انتخاب پروتکل تغذیه:</label>
+                <select
+                  value={nutritionProtocol}
+                  onChange={(e) => {
+                    setNutritionProtocol(e.target.value as any);
+                    soundAndSpeech.playTick();
+                  }}
+                  className="w-full bg-[#181820] text-white border border-[#d4af37]/50 rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                >
+                  <option value="high_protein">🥩 رژیم پر پروتئین و کم‌کربوهیدرات (Keto / Low-Carb): چربی‌سوزی و تفکیک</option>
+                  <option value="high_carb">🍚 رژیم پرکربوهیدرات و پروتئین متوسط (Mass & Power): حجم و انرژی</option>
+                  <option value="crash_diet">📉 رژیم سقوط آزاد / تخلیه سریع (Crash / Depletion): کاهش سریع وزن</option>
+                  <option value="peak_week">🏆 پروتکل هفته مسابقه (Peak Week): حذف سدیم و بارگیری گلیکوژن</option>
+                </select>
+              </div>
+
+              {/* Dynamic Content Display Card */}
+              <div className="bg-black/60 border border-dashed border-[#d4af37] p-4 rounded-xl mt-3 space-y-2">
+                {nutritionProtocol === 'high_protein' && (
+                  <div>
+                    <h4 className="text-sm font-bold text-[#d4af37] mb-1">🥩 رژیم پر پروتئین و کم‌کربوهیدرات (حجم خشک و تفکیک عمیق)</h4>
+                    <div className="text-xs text-zinc-100 leading-relaxed space-y-1.5">
+                      <p>• <strong>ساختار:</strong> پروتئین بالا (۲.۵ تا ۳ گرم به ازای هر کیلو وزن بدن)، کربوهیدرات بسیار پایین و چربی‌های سالم ضروری.</p>
+                      <p>• <strong>هدف:</strong> حفظ حداکثری بافت عضلانی در دوران چربی‌سوزی و تفکیک عمیق خطوط عضلات.</p>
+                      <p>• <strong>نکته مربیگری:</strong> مناسب برای هفته‌های پایانی منتهی به عکاسی یا مسابقه جهت خشک کردن پوست و حفظ عضلات.</p>
+                    </div>
+                  </div>
+                )}
+
+                {nutritionProtocol === 'high_carb' && (
+                  <div>
+                    <h4 className="text-sm font-bold text-cyan-400 mb-1">🍚 رژیم پرکربوهیدرات (عضله‌سازی و توان انفجاری)</h4>
+                    <div className="text-xs text-zinc-100 leading-relaxed space-y-1.5">
+                      <p>• <strong>ساختار:</strong> کربوهیدرات بالا (برنج قهوه‌ای، جو دوسر، سیب‌زمینی) همراه با پروتئین استاندارد و چربی پایین.</p>
+                      <p>• <strong>هدف:</strong> پر کردن حداکثری ذخایر گلیکوژن کبد و عضلات، افزایش شدت تمرین و رشد حجمی (Hypertrophy).</p>
+                      <p>• <strong>اردوی تیمی:</strong> ایده‌آل برای اردوهای تمرینی فشرده تیمی جهت تأمین انرژی بازیکنان فوتبال، بسکتبال و ورزش‌های استقامتی.</p>
+                    </div>
+                  </div>
+                )}
+
+                {nutritionProtocol === 'crash_diet' && (
+                  <div>
+                    <h4 className="text-sm font-bold text-rose-400 mb-1">📉 رژیم سقوط آزاد و تخلیه گلیکوژن (Crash Diet)</h4>
+                    <div className="text-xs text-zinc-100 leading-relaxed space-y-1.5">
+                      <p>• <strong>ساختار:</strong> قطع ناگهانی و شدید کربوهیدرات به مدت ۳ الی ۵ روز با کالری بسیار محدود.</p>
+                      <p>• <strong>هدف:</strong> سوزاندن فوری قند خون و آب متصل به گلیکوژن برای افت سریع وزن کاذب.</p>
+                      <p>• <strong>هشدار پزشکی:</strong> خستگی شدید، افت قند خون و ریزش مو به همراه دارد و صرفاً برای روزهای پایانیِ وزن‌کشی اضطراری است.</p>
+                    </div>
+                  </div>
+                )}
+
+                {nutritionProtocol === 'peak_week' && (
+                  <div>
+                    <h4 className="text-sm font-bold text-[#d4af37] mb-1">🏆 پروتکل طلایی هفته مسابقه (Peak Week & Show Day Pump)</h4>
+                    <div className="text-xs text-zinc-100 leading-relaxed space-y-1.5">
+                      <p>• <strong>۳ روز مانده:</strong> قطع کامل سدیم (نمک) و کاهش آب زیرپوستی جهت خشک شدن کامل پوست.</p>
+                      <p>• <strong>روز قبل از مسابقه:</strong> تخلیه کامل کربوهیدرات و شروع بارگیری برنج و قندهای پیچیده.</p>
+                      <p>• <strong>روز مسابقه (جادوی پمپاژ):</strong> مصرف ناگهانی آب، نمک و کربوهیدرات زودجذب؛ کشیده شدن آب به داخل سلول عضلانی، پمپاژ وحشتناک عضلات و بیرون زدن رگ‌ها روی پوست کاغذی.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Psychology & Eating Disorder Awareness Warning Box (Princess Diana Warning & Mental Health) */}
+          <div className="bg-[#181212] border-2 border-rose-500/50 rounded-2xl p-5 shadow-xl space-y-3">
+            <h4 className="text-sm font-bold text-rose-400 flex items-center gap-2">
+              <span className="text-lg">⚠️</span>
+              <span>هشدار جدی مربیگری و سلامت روان: نفی رژیم‌های مخرب و بولیمی (پرخوری و استفراغ ارادی)</span>
+            </h4>
+            <p className="text-xs text-zinc-300 leading-relaxed">
+              لذت غذا خوردن سالم حق هر انسان و ورزشکاری است. متأسفانه برخی افراد برای جلوگیری از افزایش وزن به روش‌های مخربی چون <strong>رژیم‌های سقوط آزاد غیرعلمی</strong> یا <strong>چرخه پرخوری و استفراغ ارادی (بولیمی - Bulimia Nervosa)</strong> روی می‌آورند.
+            </p>
+            <p className="text-xs text-zinc-300 leading-relaxed">
+              تاریخ معاصر نشان داده است که چهره‌های سرشناسی همچون <strong>پرنسس دایانا</strong> نیز درگیر همین تله‌های روحی و رژیم‌های آشغالی و فرساینده بودند که روح، روان و جسم طفلکی آن‌ها را به شدت فرسوده و نحیف ساخت. استفراغ عمدی نه تنها کمکی به سلامتی نمی‌کند، بلکه اسید معده مری را می‌سوزاند و سیستم عصبی و روانی فرد را نابود می‌کند.
+            </p>
+            <div className="bg-rose-950/30 p-3 rounded-xl border border-rose-500/30 text-rose-200 text-xs">
+              <strong>قانون طلایی خدمات‌جو:</strong> تغذیه ورزشی یعنی عشق به بدن، سوخت‌رسانی پاک و تعادل پایدار؛ هرگز روح و روان خود را قربانی رژیم‌های خودویرانگر نکنید.
             </div>
           </div>
         </div>

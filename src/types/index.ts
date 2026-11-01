@@ -1,4 +1,4 @@
-export type Language = 'fa' | 'en' | 'ku' | 'ur' | 'tr';
+export type Language = 'fa' | 'en' | 'ku' | 'ur' | 'tr' | 'ar' | 'es' | 'fr' | 'de' | 'ru' | 'zh' | 'ja' | 'ko' | 'hi';
 
 export type SeasonId = 'season-1' | 'season-2' | 'season-3' | 'season-4';
 

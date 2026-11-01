@@ -39,6 +39,10 @@ import { CentralHeroBanner } from './components/CentralHeroBanner.tsx';
 import { SportsJournalAndBlog } from './components/SportsJournalAndBlog.tsx';
 import { SportsAdSponsorHub } from './components/SportsAdSponsorHub.tsx';
 import { BrainTrainingCenter } from './components/BrainTrainingCenter.tsx';
+import { MasterExerciseBank } from './components/MasterExerciseBank.tsx';
+import { GymMusicPlayer } from './components/GymMusicPlayer.tsx';
+import { WeightCuttingProtocol } from './components/WeightCuttingProtocol.tsx';
+import { PersonalRecordsTracker } from './components/PersonalRecordsTracker.tsx';
 import { soundAndSpeech } from './utils/soundAndSpeech.ts';
 
 const DEFAULT_WHITE_LABEL: GymWhiteLabelConfig = {
@@ -360,6 +364,38 @@ export default function App() {
 
         {activeTab === 'ads' && (
           <SportsAdSponsorHub
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+          />
+        )}
+
+        {activeTab === 'gym-music' && (
+          <GymMusicPlayer
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            adhdSettings={adhdSettings}
+          />
+        )}
+
+        {activeTab === 'master-bank' && (
+          <MasterExerciseBank
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            adhdSettings={adhdSettings}
+          />
+        )}
+
+        {activeTab === 'weight-cutting' && (
+          <WeightCuttingProtocol
+            adhdSettings={adhdSettings}
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+          />
+        )}
+
+        {activeTab === 'pr-tracker' && (
+          <PersonalRecordsTracker
+            adhdSettings={adhdSettings}
             userProfile={userProfile}
             setUserProfile={setUserProfile}
           />
