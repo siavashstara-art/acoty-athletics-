@@ -33,6 +33,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
 }) => {
   const primaryItems = [
     { id: 'deep-muscles', label: '🫁 پرزنت حضوری باشگاه‌ها، قامت و چشم (اصلی)' },
+    { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و بازی‌های فکری (پیشگیری آلزایمر)' },
     { id: 'blog', label: '📰 مجله و وبلاگ علمی تخصصی (جدید)' },
     { id: 'ads', label: '📢 مرکز تبلیغات و اسپانسرینگ (جدید)' },
     { id: 'whitelabel', label: '🏛️ تنظیمات برند و وایت‌لیبل باشگاه' },
@@ -44,6 +45,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   ];
 
   const vipItems = [
+    { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و ۴ بازی فکری (پیشگیری آلزایمر)' },
     { id: 'blog', label: '📰 مجله علمی تخصصی (حقوق، روانشناسی، ترک اعتیاد)' },
     { id: 'ads', label: '📢 جذب اسپانسرینگ، تجهیزات و برندهای مکمل' },
     { id: 'android', label: '📱 خروجی اتوماتیک اندروید (بازار و مایکت)' },

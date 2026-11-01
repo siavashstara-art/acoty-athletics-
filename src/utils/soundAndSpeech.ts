@@ -17,6 +17,34 @@ class SoundAndSpeechService {
     return this.audioCtx;
   }
 
+  playSuccess(): void {
+    this.playSuccessChime();
+  }
+
+  playError(): void {
+    try {
+      const ctx = this.getAudioContext();
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now); // A3 low pitch
+      osc.frequency.exponentialRampToValueAtTime(150, now + 0.2);
+
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.25);
+    } catch {
+      // ignore
+    }
+  }
+
   // Play a pleasant gold gym bell / completion chime
   playSuccessChime(): void {
     try {

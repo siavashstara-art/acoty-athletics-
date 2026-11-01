@@ -305,12 +305,25 @@ export interface DeepHiddenMusclesModule {
   isLocked?: boolean;
 }
 
+export interface StrokeNeuroRehabItem {
+  id: string;
+  stageNameFa: string;
+  stageNameEn: string;
+  clinicalObjectiveFa: string;
+  neurologicalMechanismFa: string; // e.g., نوروپلاستی و تحریک قشر حرکتی
+  exercisesFa: string[];
+  caregiverRoleFa: string[]; // نقش همراهان و خانواده در منزل
+  adaptiveEquipmentFa: string; // تجهیزات فیزیوتراپی خانگی
+  safetyWarningFa: string;
+  adhdMicroSteps: string[];
+}
+
 export interface JournalArticle {
   id: string;
   titleFa: string;
   authorNameFa: string;
-  authorRoleFa: string; // e.g., روانشناس ورزشی، حقوقدان ورزشی، مربی ارشد
-  categoryFa: 'روانشناسی ورزشی' | 'حقوق ورزشی' | 'تمرینات ترک اعتیاد' | 'تجهیزات و تغذیه' | 'آسیب‌شناسی و بیومکانیک';
+  authorRoleFa: string; // e.g., روانشناس ورزشی، حقوقدان، متخصص تغذیه، فیزیوتراپیست
+  categoryFa: 'روانشناسی ورزشی' | 'حقوق ورزشی' | 'تمرینات ترک اعتیاد' | 'تغذیه تخصصی و رژیم‌شناسی' | 'مدیریت برنامه و ایجنسی ورزشکاران' | 'آسیب‌شناسی و بیومکانیک' | 'بازتوانی عصبی و سکته مغزی';
   abstractFa: string;
   contentParagraphsFa: string[];
   publishDate: string;
@@ -323,7 +336,7 @@ export interface JournalArticle {
 export interface AdCampaignSponsor {
   id: string;
   sponsorNameFa: string;
-  categoryFa: 'باشگاه و آکادمی ورزشی' | 'تجهیزات بدنسازی' | 'مکمل‌های ورزشی' | 'کلینیک ترک اعتیاد ورزشی' | 'مشاوره حقوقی و روانشناسی';
+  categoryFa: 'باشگاه و آکادمی ورزشی' | 'تجهیزات بدنسازی' | 'مکمل‌های ورزشی' | 'کلینیک ترک اعتیاد ورزشی' | 'مشاوره حقوقی و روانشناسی' | 'کلینیک تغذیه ورزشی' | 'مدیریت برنامه و ایجنسی ورزشکاران' | 'تجهیزات پزشکی و فیزیوتراپی';
   logoOrBannerUrl: string;
   headlineFa: string;
   descriptionFa: string;

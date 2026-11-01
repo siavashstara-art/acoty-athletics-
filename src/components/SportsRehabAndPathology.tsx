@@ -30,7 +30,8 @@ import {
   PACKAGE1_BIOMECHANICS_DATA,
   PACKAGE1_PATHOLOGY_DATA,
   PACKAGE1_POSTURAL_DATA,
-  PACKAGE1_RTP_PHASES
+  PACKAGE1_RTP_PHASES,
+  STROKE_REHAB_PROTOCOLS
 } from '../data/sportsData.ts';
 import { soundAndSpeech } from '../utils/soundAndSpeech.ts';
 
@@ -47,7 +48,7 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
   setUserProfile,
   onProceedNext
 }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'biomech' | 'pathology' | 'rtp' | 'posture'>('biomech');
+  const [activeSubTab, setActiveSubTab] = useState<'biomech' | 'pathology' | 'rtp' | 'posture' | 'stroke'>('biomech');
   const [selectedBioId, setSelectedBioId] = useState<string>(PACKAGE1_BIOMECHANICS_DATA[0].id);
   const [selectedPathId, setSelectedPathId] = useState<string>(PACKAGE1_PATHOLOGY_DATA[0].id);
   const [selectedPostureId, setSelectedPostureId] = useState<string>(PACKAGE1_POSTURAL_DATA[0].id);
@@ -72,7 +73,7 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
       // ignore
     }
     soundAndSpeech.playSuccessChime();
-    setSaveToast('پکیج اول (آسیب‌شناسی، حرکات اصلاحی و بیومکانیک پیشرفته) با موفقیت در ایسیتی اتلتیکس ثبت و تایید گردید!');
+    setSaveToast('پکیج اول (آسیب‌شناسی، حرکات اصلاحی، سکته مغزی و بیومکانیک پیشرفته) با موفقیت در ایسیتی اتلتیکس ثبت و تایید گردید!');
     setTimeout(() => {
       setSaveToast(null);
     }, 4500);
@@ -110,7 +111,7 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
           <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
             <div className="flex items-center gap-2 text-xs text-[#d4af37] font-semibold bg-black/60 px-3 py-1 rounded-full border border-[#d4af37]/30">
               <ShieldAlert className="w-3.5 h-3.5 text-[#00f2fe]" />
-              <span>پکیج ۱: آسیب‌شناسی، حرکات اصلاحی و بیومکانیک پیشرفته (ماژول‌های ۷ تا ۱۰)</span>
+              <span>پکیج ۱: آسیب‌شناسی، حرکات اصلاحی، سکته مغزی و بیومکانیک پیشرفته (ماژول‌های ۷ تا ۱۰)</span>
             </div>
             {isPackageSaved && (
               <span className="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-3 py-1 rounded-full font-bold">
@@ -121,10 +122,10 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
           </div>
 
           <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white">
-            مهندسی پیشگیری از آسیب، تحلیل زوایای مفصلی و بازگشت به ورزش
+            مهندسی پیشگیری از آسیب، بازتوانی سکته مغزی و تحلیل زوایای مفصلی
           </h2>
           <p className="text-xs sm:text-sm text-zinc-300 mt-2 max-w-3xl leading-relaxed">
-            مبتنی بر استانداردهای فدراسیون جهانی پزشکی ورزشی و متدولوژی اختصاصی خدمات‌جو (اس‌ئی امیری / سیاوش علی‌میری)؛ بهینه‌سازی گشتاورهای برشی، مهار ناهنجاری‌های اسکلتی و غربالگری پارگی ACL و دیسک کمری.
+            مبتنی بر استانداردهای فدراسیون جهانی پزشکی ورزشی و متدولوژی اختصاصی خدمات‌جو (اس‌ئی امیری / سیاوش علی‌میری)؛ بهینه‌سازی گشتاورهای برشی، بازتوانی حس حسی-حرکتی سکته مغزی و فیزیوتراپی خانگی با همراهی خانواده.
           </p>
 
           {/* Toast Notification */}
@@ -137,8 +138,8 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
         </div>
       </div>
 
-      {/* 4 Modules Sub-Navigation Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      {/* 5 Modules Sub-Navigation Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
         <button
           onClick={() => {
             setActiveSubTab('biomech');
@@ -154,7 +155,7 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
             <Compass className="w-4 h-4 text-[#d4af37]" />
             <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">ماژول ۷</span>
           </div>
-          <span className="text-xs font-bold">۱. زوایای بیومکانیک و CKC/OKC</span>
+          <span className="text-xs font-bold">۱. زوایای بیومکانیک</span>
         </button>
 
         <button
@@ -172,7 +173,7 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
             <AlertTriangle className="w-4 h-4 text-rose-400" />
             <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">ماژول ۸</span>
           </div>
-          <span className="text-xs font-bold">۲. پاتولوژی و نقاط بحرانی آسیب</span>
+          <span className="text-xs font-bold">۲. پاتولوژی آسیب</span>
         </button>
 
         <button
@@ -190,7 +191,7 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
             <RotateCcw className="w-4 h-4 text-emerald-400" />
             <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">ماژول ۹</span>
           </div>
-          <span className="text-xs font-bold">۳. پروتکل بازگشت به مسابقه (RTP)</span>
+          <span className="text-xs font-bold">۳. بازگشت به مسابقه (RTP)</span>
         </button>
 
         <button
@@ -208,7 +209,25 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
             <Bone className="w-4 h-4 text-amber-400" />
             <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">ماژول ۱۰</span>
           </div>
-          <span className="text-xs font-bold">۴. حرکات اصلاحی ناهنجاری‌ها</span>
+          <span className="text-xs font-bold">۴. حرکات اصلاحی</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveSubTab('stroke');
+            soundAndSpeech.playTick();
+          }}
+          className={`p-3 rounded-xl border text-right transition-all flex flex-col justify-between ${
+            activeSubTab === 'stroke'
+              ? 'bg-purple-500/20 border-purple-500 text-purple-300 font-bold shadow-md'
+              : 'bg-[#121217] border-zinc-800 text-zinc-300 hover:border-zinc-700'
+          }`}
+        >
+          <div className="flex items-center gap-1.5 mb-1">
+            <Activity className="w-4 h-4 text-purple-400" />
+            <span className="text-[10px] bg-zinc-800 px-1.5 py-0.5 rounded text-zinc-400">کلینیک جدید</span>
+          </div>
+          <span className="text-xs font-bold">۵. بازتوانی سکته مغزی</span>
         </button>
       </div>
 
@@ -602,6 +621,104 @@ export const SportsRehabAndPathology: React.FC<SportsRehabAndPathologyProps> = (
                 })}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stroke Neuro-Rehab & Home Caregiver Clinic */}
+      {activeSubTab === 'stroke' && (
+        <div className="bg-[#121217] border-2 border-purple-500/50 rounded-2xl p-5 space-y-5 shadow-2xl">
+          <div className="border-b border-zinc-800 pb-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Activity className="w-5 h-5 text-purple-400" />
+              <div>
+                <h3 className="text-sm sm:text-base font-extrabold text-white">
+                  🧠 کلینیک تخصصی بازتوانی عصبی سکته مغزی و فیزیوتراپی خانگی
+                </h3>
+                <p className="text-xs text-zinc-300">
+                  بازگرداندن توان حسی-حرکتی فلج نیمه بدن (Hemiplegia)، اصل نوروپلاستی و راهنمای گام‌به‌گام همراهان و خانواده بیمار
+                </p>
+              </div>
+            </div>
+            <span className="text-[10px] bg-purple-950 text-purple-300 border border-purple-500/40 px-2.5 py-1 rounded-full font-bold">
+              پروتکل خانگی و بالینی
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            {STROKE_REHAB_PROTOCOLS.map(st => (
+              <div
+                key={st.id}
+                className="bg-[#181822] border border-purple-500/30 rounded-xl p-4 sm:p-5 space-y-4 shadow-lg"
+              >
+                <div className="border-b border-zinc-800 pb-2">
+                  <h4 className="text-sm sm:text-base font-extrabold text-purple-300">
+                    {st.stageNameFa}
+                  </h4>
+                  <p className="text-[11px] text-zinc-400 font-mono" dir="ltr">
+                    {st.stageNameEn}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="bg-[#1c1824] border border-purple-500/30 p-3 rounded-xl">
+                    <span className="font-extrabold text-purple-300 block mb-1">
+                      🎯 هدف کلینیکی فاز بازتوانی:
+                    </span>
+                    <p className="text-zinc-200 leading-relaxed">{st.clinicalObjectiveFa}</p>
+                  </div>
+
+                  <div className="bg-[#121c22] border border-cyan-500/30 p-3 rounded-xl">
+                    <span className="font-extrabold text-cyan-300 block mb-1">
+                      🔬 مکانیسم نورولوژی و نوروپلاستی مغز:
+                    </span>
+                    <p className="text-zinc-200 leading-relaxed">{st.neurologicalMechanismFa}</p>
+                  </div>
+                </div>
+
+                {/* Exercises list */}
+                <div className="space-y-2 text-xs bg-[#181820] p-3.5 rounded-xl border border-zinc-800">
+                  <span className="font-extrabold text-amber-300 block">
+                    🏋️ تمرینات حسی-حرکتی تجویز شده در منزل و کلینیک:
+                  </span>
+                  <ul className="list-disc pr-4 text-zinc-200 space-y-1.5 leading-relaxed">
+                    {st.exercisesFa.map((ex: string, i: number) => (
+                      <li key={i}>{ex}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Caregiver & Family Role */}
+                <div className="space-y-2 text-xs bg-emerald-950/20 border border-emerald-500/40 p-3.5 rounded-xl">
+                  <span className="font-extrabold text-emerald-400 block flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <span>👨‍👩‍👧‍👦 نقش کلیدی همراهان، همسر و اطرافیان بیمار در فیزیوتراپی خانگی:</span>
+                  </span>
+                  <ul className="list-disc pr-4 text-emerald-200 space-y-1.5 leading-relaxed">
+                    {st.caregiverRoleFa.map((role: string, i: number) => (
+                      <li key={i}>{role}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Equipment & Warnings */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="bg-[#1a1a1f] p-3 rounded-xl border border-zinc-800">
+                    <span className="font-extrabold text-amber-300 block mb-1">
+                      🛠️ تجهیزات فیزیوتراپی و کمک‌بهبودی خانگی:
+                    </span>
+                    <p className="text-zinc-300 leading-relaxed">{st.adaptiveEquipmentFa}</p>
+                  </div>
+
+                  <div className="bg-rose-950/20 border border-rose-500/30 p-3 rounded-xl">
+                    <span className="font-extrabold text-rose-400 block mb-1">
+                      ⚠️ هشدارهای ایمنی و پرهیزات:
+                    </span>
+                    <p className="text-rose-200 leading-relaxed">{st.safetyWarningFa}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

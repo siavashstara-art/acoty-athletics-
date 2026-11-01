@@ -24,6 +24,32 @@ const INITIAL_SPONSORS: AdCampaignSponsor[] = [
   },
   {
     id: 'sp-2',
+    sponsorNameFa: 'ایجنسی مدیریت برنامه و ترانسفر لژیونرها (Tavana Sports Management)',
+    categoryFa: 'مدیریت برنامه و ایجنسی ورزشکاران',
+    logoOrBannerUrl: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=300&auto=format&fit=crop&q=80',
+    headlineFa: 'مدیریت حرفه‌ای برنامه، برندینگ شخصی و ترانسفر بین‌المللی فوتبالیست‌ها و مشاهیر',
+    descriptionFa: 'تنظیم قراردادهای فیفا، مدیریت اسپانسرینگ، حفظ حقوق تصویر چهره و برنامه‌ریزی جامع مالی ورزشکاران.',
+    contactPhone: '021-88990011',
+    websiteUrl: 'https://agent.tavana',
+    adPlacement: 'بنر اصلی (Hero)',
+    discountCode: 'AGENT-VIP',
+    isFeatured: true
+  },
+  {
+    id: 'sp-3',
+    sponsorNameFa: 'کلینیک تخصصی تغذیه ورزشی و آنالیز InBody دکتر حسینی',
+    categoryFa: 'کلینیک تغذیه ورزشی',
+    logoOrBannerUrl: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=300&auto=format&fit=crop&q=80',
+    headlineFa: 'تنظیم رژیم‌های علمی افزایش حجم خشک عضلانی و کاهش چربی بدون افت توان',
+    descriptionFa: 'برنامه‌ریزی تغذیه دوره مسابقه، بارگیری کربوهیدرات و پاک‌سازی کبد با تاییدیه نظام پزشکی.',
+    contactPhone: '021-44556677',
+    websiteUrl: 'https://nutrition.tavana',
+    adPlacement: 'کارت اختصاصی اسپانسر',
+    discountCode: 'DIET-GOLD',
+    isFeatured: true
+  },
+  {
+    id: 'sp-4',
     sponsorNameFa: 'تجهیزات بدنسازی آریا اسپرت (تولید ملی)',
     categoryFa: 'تجهیزات بدنسازی',
     logoOrBannerUrl: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=300&auto=format&fit=crop&q=80',
@@ -33,19 +59,6 @@ const INITIAL_SPONSORS: AdCampaignSponsor[] = [
     websiteUrl: 'https://ariasport.tavana',
     adPlacement: 'کارت اختصاصی اسپانسر',
     discountCode: 'ARIA-GOLD10',
-    isFeatured: true
-  },
-  {
-    id: 'sp-3',
-    sponsorNameFa: 'کلینیک روانشناسی و حقوق ورزشی دکتر علیمیری',
-    categoryFa: 'مشاوره حقوقی و روانشناسی',
-    logoOrBannerUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=300&auto=format&fit=crop&q=80',
-    headlineFa: 'تنظیم تخصصی قراردادهای مربیگری و مشاوره ذهنی مسابقات کشوری',
-    descriptionFa: 'تنظیم قراردادهای حقوقی بدون ریسک جهت جلوگیری از دعاوی دادگاهی و آمادگی روانی قبل مسابقه.',
-    contactPhone: '09121112233',
-    websiteUrl: 'https://legal.tavana',
-    adPlacement: 'بنر مجله علمی',
-    discountCode: 'LEGAL-VIP',
     isFeatured: true
   }
 ];
@@ -64,7 +77,7 @@ export const SportsAdSponsorHub: React.FC<SportsAdSponsorHubProps> = ({
   // Campaign Form Modal
   const [showFormModal, setShowFormModal] = useState(false);
   const [sponsorName, setSponsorName] = useState('');
-  const [category, setCategory] = useState<'باشگاه و آکادمی ورزشی' | 'تجهیزات بدنسازی' | 'مکمل‌های ورزشی' | 'کلینیک ترک اعتیاد ورزشی' | 'مشاوره حقوقی و روانشناسی'>('باشگاه و آکادمی ورزشی');
+  const [category, setCategory] = useState<'باشگاه و آکادمی ورزشی' | 'تجهیزات بدنسازی' | 'مکمل‌های ورزشی' | 'کلینیک ترک اعتیاد ورزشی' | 'مشاوره حقوقی و روانشناسی' | 'کلینیک تغذیه ورزشی' | 'مدیریت برنامه و ایجنسی ورزشکاران'>('باشگاه و آکادمی ورزشی');
   const [headline, setHeadline] = useState('');
   const [description, setDescription] = useState('');
   const [phone, setPhone] = useState('');
@@ -72,7 +85,7 @@ export const SportsAdSponsorHub: React.FC<SportsAdSponsorHubProps> = ({
   const [discount, setDiscount] = useState('');
   const [isOrderSubmitted, setIsOrderSubmitted] = useState(false);
 
-  const categories = ['همه', 'باشگاه و آکادمی ورزشی', 'تجهیزات بدنسازی', 'مکمل‌های ورزشی', 'کلینیک ترک اعتیاد ورزشی', 'مشاوره حقوقی و روانشناسی'];
+  const categories = ['همه', 'باشگاه و آکادمی ورزشی', 'مدیریت برنامه و ایجنسی ورزشکاران', 'کلینیک تغذیه ورزشی', 'تجهیزات بدنسازی', 'مکمل‌های ورزشی', 'کلینیک ترک اعتیاد ورزشی', 'مشاوره حقوقی و روانشناسی'];
 
   const filteredSponsors = selectedCategory === 'همه'
     ? sponsors
@@ -324,6 +337,8 @@ export const SportsAdSponsorHub: React.FC<SportsAdSponsorHubProps> = ({
                       className="w-full bg-[#181820] border border-zinc-700 rounded-xl px-3 py-2 text-white outline-none"
                     >
                       <option value="باشگاه و آکادمی ورزشی">باشگاه و آکادمی ورزشی</option>
+                      <option value="مدیریت برنامه و ایجنسی ورزشکاران">مدیریت برنامه و ایجنسی ورزشکاران</option>
+                      <option value="کلینیک تغذیه ورزشی">کلینیک تغذیه ورزشی</option>
                       <option value="تجهیزات بدنسازی">تجهیزات بدنسازی</option>
                       <option value="مکمل‌های ورزشی">مکمل‌های ورزشی</option>
                       <option value="کلینیک ترک اعتیاد ورزشی">کلینیک ترک اعتیاد ورزشی</option>

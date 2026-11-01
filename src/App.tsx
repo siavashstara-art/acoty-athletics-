@@ -38,6 +38,7 @@ import { GlobalSearchAndGuideModal } from './components/GlobalSearchAndGuideModa
 import { CentralHeroBanner } from './components/CentralHeroBanner.tsx';
 import { SportsJournalAndBlog } from './components/SportsJournalAndBlog.tsx';
 import { SportsAdSponsorHub } from './components/SportsAdSponsorHub.tsx';
+import { BrainTrainingCenter } from './components/BrainTrainingCenter.tsx';
 import { soundAndSpeech } from './utils/soundAndSpeech.ts';
 
 const DEFAULT_WHITE_LABEL: GymWhiteLabelConfig = {
@@ -361,6 +362,14 @@ export default function App() {
           <SportsAdSponsorHub
             userProfile={userProfile}
             setUserProfile={setUserProfile}
+          />
+        )}
+
+        {activeTab === 'brain-training' && (
+          <BrainTrainingCenter
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+            onGoToLoyalty={() => setActiveTab('loyalty')}
           />
         )}
 
