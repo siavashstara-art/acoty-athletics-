@@ -31,22 +31,29 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen
 }) => {
-  const navItems = [
-    { id: 'whitelabel', label: '۱. وایت‌لیبل (فصل ۱)' },
-    { id: 'biochem', label: '۲. غدد و WADA (فصل ۲)' },
-    { id: 'biomechanics', label: '۳. بیومکانیک (فصل ۲)' },
-    { id: 'package1', label: '🛡️ پکیج ۱: آسیب‌شناسی (ماژول ۷-۱۰)' },
-    { id: 'package2', label: '🧠 پکیج ۲: روانشناسی (ماژول ۱۱-۱۴)' },
-    { id: 'package3', label: '📊 پکیج ۳: تکنولوژی و ارزیابی (ماژول ۱۵-۱۹)' },
-    { id: 'deep-muscles', label: '🫁 عضلات پنهان و پرزنت (فصل ۴)' },
-    { id: 'nutrition', label: '۴. تغذیه و متابولیسم (فصل ۳)' },
-    { id: 'periodization', label: '۵. سیستم‌های تمرینی (فصل ۳)' },
-    { id: 'encyclopedia', label: '۶. دائرةالمعارف حرکات (اسکریپت ۶)' },
-    { id: 'referral', label: '۷. لیگ معرفان (فصل ۴)' },
-    { id: 'loyalty', label: '۸. مشاهیر وفاداران (فصل ۴)' },
-    { id: 'hamraz', label: '۹. همراز و آفرینش (فصل ۴)' },
-    { id: 'promo', label: '۱۰. سناریوی آپارات (فصل ۴)' },
-    { id: 'android', label: '۱۱. خروجی بازار و مایکت (فصل ۴)' }
+  const primaryItems = [
+    { id: 'deep-muscles', label: '🫁 پرزنت حضوری باشگاه‌ها، قامت و چشم (اصلی)' },
+    { id: 'blog', label: '📰 مجله و وبلاگ علمی تخصصی (جدید)' },
+    { id: 'ads', label: '📢 مرکز تبلیغات و اسپانسرینگ (جدید)' },
+    { id: 'whitelabel', label: '🏛️ تنظیمات برند و وایت‌لیبل باشگاه' },
+    { id: 'biomechanics', label: '🏋️ بیومکانیک، آناتومی و اهرم‌ها' },
+    { id: 'package1', label: '🛡️ پکیج آسیب‌شناسی و ارزیابی مفاصل' },
+    { id: 'nutrition', label: '🍎 تغذیه تخصصی و متابولیسم سلولی' },
+    { id: 'periodization', label: '⚡ سیستم‌های تمرینی و پیریودیزاسیون' },
+    { id: 'encyclopedia', label: '📚 دائرةالمعارف ۱۶ حرکت بدنسازی' }
+  ];
+
+  const vipItems = [
+    { id: 'blog', label: '📰 مجله علمی تخصصی (حقوق، روانشناسی، ترک اعتیاد)' },
+    { id: 'ads', label: '📢 جذب اسپانسرینگ، تجهیزات و برندهای مکمل' },
+    { id: 'android', label: '📱 خروجی اتوماتیک اندروید (بازار و مایکت)' },
+    { id: 'biochem', label: '🧪 بیوشیمی غدد و قوانین Anti-Doping WADA' },
+    { id: 'package3', label: '📊 تکنولوژی، شبیه‌ساز ACWR و آنالیز' },
+    { id: 'package2', label: '🧠 روانشناسی ورزشی و تمرکز تونلی' },
+    { id: 'referral', label: '🏆 لیگ معرفان (Referral League VIP)' },
+    { id: 'loyalty', label: '👑 تالار مشاهیر وفاداران (Loyalty VIP)' },
+    { id: 'hamraz', label: '📜 همراز و آفرینش (محتوای اختصاصی)' },
+    { id: 'promo', label: '🎬 استودیوی سناریوی تبلیغاتی آپارات' }
   ];
 
   return (
@@ -55,7 +62,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
       <div className="bg-gradient-to-r from-[#aa820a]/20 via-[#d4af37]/15 to-[#aa820a]/20 border-b border-[#d4af37]/20 py-1.5 px-3 text-center text-[10px] md:text-xs text-[#d4af37] font-semibold tracking-wide flex items-center justify-center gap-2">
         <Sparkles className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
         <span className="truncate">
-          اکوسیستم آفرینش آفرینا شهر جدید نیو متاورسی جهان ایبل سیتی (توانا سیتی) - FB NewMeta دائرةالمعارف جهانی ورزش
+          اکوسیستم آفرینش آفرینا شهر جدید نیو متاورسی جهان ایبل سیتی (توانا سیتی) - FB NewMeta EbarCity Athletics
         </span>
       </div>
 
@@ -81,15 +88,15 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
           </div>
         </div>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden 2xl:flex items-center gap-1 text-xs font-medium overflow-x-auto">
-          {navItems.map((item) => (
+        {/* Clean Primary Navigation Items for Desktop */}
+        <nav className="hidden xl:flex items-center gap-1 text-xs font-medium">
+          {primaryItems.slice(0, 4).map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-all ${
+              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition-all font-semibold ${
                 activeTab === item.id
-                  ? 'bg-[#d4af37] text-black font-bold shadow-md'
+                  ? 'bg-[#d4af37] text-black font-extrabold shadow-md'
                   : 'text-zinc-300 hover:text-[#d4af37] hover:bg-zinc-800/60'
               }`}
             >
@@ -98,7 +105,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
           ))}
         </nav>
 
-        {/* Accessibility, Search & Auth Zone */}
+        {/* Accessibility, Search & Drawer Trigger */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Global Search & Guide Button */}
           {onOpenSearch && (
@@ -112,46 +119,14 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
             </button>
           )}
 
-          {/* ADHD Mode Quick Toggle */}
+          {/* Menu Drawer Button (Unified Menu for Clean Desktop & Mobile View) */}
           <button
-            onClick={onToggleAdhd}
-            className={`px-2 py-1 md:px-2.5 md:py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all border ${
-              adhdSettings.isEnabled
-                ? 'bg-amber-500/20 text-amber-300 border-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.3)]'
-                : 'bg-zinc-900/80 text-zinc-400 border-zinc-700 hover:text-zinc-200'
-            }`}
-            title="حالت تمرکز و ریزگام‌های ADHD"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="flex items-center gap-1.5 bg-[#181820] hover:bg-zinc-800 text-amber-300 border border-zinc-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
+            aria-label="منوی گزینه‌ها و بخش VIP"
           >
-            <span>ADHD</span>
-            <span className="text-[10px] hidden sm:inline">{adhdSettings.isEnabled ? 'روشن' : 'خاموش'}</span>
-          </button>
-
-          {/* Voice Narration Audio */}
-          <button
-            onClick={onToggleVoice}
-            className={`p-1.5 rounded-lg border transition-all ${
-              adhdSettings.voiceNarration
-                ? 'bg-[#d4af37]/20 text-[#d4af37] border-[#d4af37]'
-                : 'bg-zinc-900/80 text-zinc-400 border-zinc-700'
-            }`}
-            title={adhdSettings.voiceNarration ? 'صدا فعال است' : 'صدا غیرفعال است'}
-            aria-label="روشن/خاموش کردن راهنمای صوتی"
-          >
-            {adhdSettings.voiceNarration ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          </button>
-
-          {/* High Contrast */}
-          <button
-            onClick={onToggleContrast}
-            className={`p-1.5 rounded-lg border transition-all ${
-              adhdSettings.highContrast
-                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500'
-                : 'bg-zinc-900/80 text-zinc-400 border-zinc-700'
-            }`}
-            title="حالت کنتراست بالا برای معلولین و کم‌بینایان"
-            aria-label="حالت کنتراست بالا"
-          >
-            <Eye className="w-4 h-4" />
+            {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4 text-amber-400" />}
+            <span>منوی امکانات & VIP</span>
           </button>
 
           {/* User Auth Button */}
@@ -171,37 +146,63 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
               </>
             )}
           </button>
-
-          {/* Mobile & Tablet Menu Trigger */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="2xl:hidden p-1.5 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white"
-            aria-label="منوی گزینه‌ها"
-          >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Categorized Drawer Menu (Prevents Main Screen Clutter During Gym Pitches) */}
       {isMobileMenuOpen && (
-        <div className="2xl:hidden bg-[#121217] border-b border-[#d4af37]/30 px-4 py-3 space-y-1.5 animate-in slide-in-from-top-2">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                setActiveTab(item.id);
-                setIsMobileMenuOpen(false);
-              }}
-              className={`w-full text-right px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === item.id
-                  ? 'bg-[#d4af37] text-black font-bold'
-                  : 'text-zinc-300 hover:bg-zinc-800 hover:text-[#d4af37]'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="bg-[#0e0e12] border-b-2 border-[#d4af37] px-4 py-5 space-y-5 animate-in slide-in-from-top-2 shadow-2xl max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Category 1: Main Gym Pitch & Sports Science */}
+            <div className="space-y-2">
+              <h3 className="text-xs font-extrabold text-[#d4af37] border-b border-zinc-800 pb-2 flex items-center gap-1.5">
+                <span>🏋️ ۱. بخش‌های اصلی و پرزنت حضوری باشگاه:</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {primaryItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`text-right px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      activeTab === item.id
+                        ? 'bg-[#d4af37] text-black font-extrabold shadow-md'
+                        : 'bg-[#181820] text-zinc-300 hover:bg-zinc-800 hover:text-[#d4af37]'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Category 2: Specialized & VIP Tools (Kept in Drawer to Avoid Clutter) */}
+            <div className="space-y-2">
+              <h3 className="text-xs font-extrabold text-amber-300 border-b border-zinc-800 pb-2 flex items-center gap-1.5">
+                <span>👑 ۲. امکانات اختصاصی، خروجی اندروید و بخش‌های VIP:</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                {vipItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActiveTab(item.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`text-right px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      activeTab === item.id
+                        ? 'bg-amber-400 text-black font-extrabold shadow-md'
+                        : 'bg-[#181820] text-zinc-300 hover:bg-zinc-800 hover:text-amber-300'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </header>

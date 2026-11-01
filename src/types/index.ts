@@ -300,10 +300,40 @@ export interface DeepHiddenMusclesModule {
   summaryPointsFa: string[];
   scientificMechanismFa: string;
   executionStepsFa: string[];
-  proTipFa: string;
+  proTipFa?: string;
   adhdMicroSteps: string[];
   isLocked?: boolean;
 }
+
+export interface JournalArticle {
+  id: string;
+  titleFa: string;
+  authorNameFa: string;
+  authorRoleFa: string; // e.g., روانشناس ورزشی، حقوقدان ورزشی، مربی ارشد
+  categoryFa: 'روانشناسی ورزشی' | 'حقوق ورزشی' | 'تمرینات ترک اعتیاد' | 'تجهیزات و تغذیه' | 'آسیب‌شناسی و بیومکانیک';
+  abstractFa: string;
+  contentParagraphsFa: string[];
+  publishDate: string;
+  readTimeMinutes: number;
+  likesCount: number;
+  tagsFa: string[];
+  isVerifiedByEditor: boolean;
+}
+
+export interface AdCampaignSponsor {
+  id: string;
+  sponsorNameFa: string;
+  categoryFa: 'باشگاه و آکادمی ورزشی' | 'تجهیزات بدنسازی' | 'مکمل‌های ورزشی' | 'کلینیک ترک اعتیاد ورزشی' | 'مشاوره حقوقی و روانشناسی';
+  logoOrBannerUrl: string;
+  headlineFa: string;
+  descriptionFa: string;
+  contactPhone: string;
+  websiteUrl: string;
+  adPlacement: 'بنر اصلی (Hero)' | 'بنر مجله علمی' | 'کارت اختصاصی اسپانسر' | 'واترمارک پرزنت';
+  discountCode?: string;
+  isFeatured: boolean;
+}
+
 
 
 

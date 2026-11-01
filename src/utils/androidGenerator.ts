@@ -114,7 +114,7 @@ export function generateTermuxBuildScript(config: AndroidPackageConfig): string 
   return `#!/data/data/com.termux/files/usr/bin/bash
 # ==============================================================================
 # اسکریپت بیلد و تبدیل خودکار در ترموکس (Termux مخصوص گوشی ردمی نوت ۸)
-# توسعه‌دهنده: آقای اکبر علی‌میری (سیاوش) | اکوسیستم توانا سیتی
+# توسعه‌دهنده: آقای اکبر علیمیری (سیاوش) | اکوسیستم توانا سیتی
 # شناسه بسته: ${config.packageName}
 # ==============================================================================
 
@@ -137,7 +137,7 @@ if [ ! -f "keystore/ebarcity-release-key.jks" ]; then
         -keyalg RSA \\
         -keysize 2048 \\
         -validity 10000 \\
-        -dname "CN=Akbar Ali-Miri (Siavash), OU=TavanaCity Athletics, O=EbarCity, L=Tehran, C=IR" \\
+        -dname "CN=Akbar Alimiri (Siavash), OU=TavanaCity Athletics, O=EbarCity, L=Tehran, C=IR" \\
         -storepass "$SIGNING_STORE_PASSWORD" \\
         -keypass "$SIGNING_KEY_PASSWORD"
     echo "✅ کلید امضا با موفقیت در keystore/ebarcity-release-key.jks ذخیره شد."

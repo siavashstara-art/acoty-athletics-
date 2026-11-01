@@ -3,7 +3,8 @@ import { Shield, Smartphone, Heart, Sparkles, ExternalLink } from 'lucide-react'
 
 export const FooterStamp: React.FC = () => {
   const portfolioItems = [
-    { name: 'فرش‌باز', desc: 'مارکت‌پلیس تخصصی فرش دستباف و ماشینی' },
+    { name: 'فرش بازار', desc: 'مارکت‌پلیس تخصصی فرش دستباف و ماشینی' },
+    { name: 'طلایار', desc: 'سامانه هوشمند تحلیل بازار طلا، جواهرات و صندوق‌های سرمایه‌گذاری طلا' },
     { name: 'لینگوی', desc: 'پلتفرم هوشمند یادگیری زبان‌های زنده دنیا' },
     { name: 'تی‌دیپلوی (TDeploy)', desc: 'موتور استقرار و اتوماسیون برنامه‌ها در موبایل و سرور' },
     { name: 'توانا پلتفرم', desc: 'بستر جامع مدیریت کسب‌وکارهای مدرن متاورسی' },
@@ -58,7 +59,7 @@ export const FooterStamp: React.FC = () => {
       <div className="bg-[#050507] border-t border-zinc-900 py-6 px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-2">
           <p className="text-zinc-300 text-xs md:text-sm font-semibold leading-relaxed">
-            «تمام حقوق مادی و معنوی این اثر متعلق است به آقای اکبر علی‌میری (معروف به سیاوش / توسعه‌دهنده).»
+            «تمام حقوق مادی و معنوی این اثر متعلق است به آقای اکبر علیمیری (معروف به سیاوش / توسعه‌دهنده).»
           </p>
           <p className="text-zinc-400 text-[11px] flex items-center justify-center gap-1.5 flex-wrap">
             <span>اکوسیستم آفرینش آفرینا شهر جدید نیو متاورسی جهان ایبل سیتی (توانا سیتی)</span>

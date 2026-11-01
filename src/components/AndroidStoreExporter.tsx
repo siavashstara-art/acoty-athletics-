@@ -27,7 +27,7 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
   const [pkgName, setPkgName] = useState('ir.ebarcity.athletics');
   const [verName, setVerName] = useState('1.0.0');
   const [verCode, setVerCode] = useState(1);
-  const [activeSubTab, setActiveSubTab] = useState<'gradle' | 'manifest' | 'termux'>('gradle');
+  const [activeSubTab, setActiveSubTab] = useState<'gradle' | 'manifest' | 'termux' | 'github'>('gradle');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const config: AndroidPackageConfig = {
@@ -41,6 +41,74 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
   const manifestContent = generateAndroidManifest(config);
   const gradleContent = generateBuildGradle(config);
   const termuxContent = generateTermuxBuildScript(config);
+  const githubContent = `name: EbarCity Athletics Android Release CI/CD
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build Signed Android APK & AAB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Node.js & Build Web Assets
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Web Dependencies & Build Web Project
+        run: |
+          npm ci
+          npm run build
+
+      - name: Decode Android Keystore File
+        env:
+          KEYSTORE_BASE64: \${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          mkdir -p android/app/keystore
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 --decode > android/app/keystore/ebarcity-release-key.jks
+            echo "Keystore successfully decoded from GitHub Secrets."
+          else
+            echo "Generating auto-keystore..."
+            keytool -genkey -v -keystore android/app/keystore/ebarcity-release-key.jks \\
+              -alias ebarkey -keyalg RSA -keysize 2048 -validity 10000 \\
+              -storepass default_password -keypass default_password \\
+              -dname "CN=Akbar Ali Miri, OU=EbarCity Athletics, O=FB NewMeta Tavana City, L=Tehran, C=IR"
+          fi
+
+      - name: Build Release APK & AAB with Gradle
+        working-directory: ./android
+        env:
+          SIGNING_STORE_PASSWORD: \${{ secrets.SIGNING_STORE_PASSWORD || 'default_password' }}
+          SIGNING_KEY_ALIAS: \${{ secrets.SIGNING_KEY_ALIAS || 'ebarkey' }}
+          SIGNING_KEY_PASSWORD: \${{ secrets.SIGNING_KEY_PASSWORD || 'default_password' }}
+        run: |
+          ./gradlew assembleRelease bundleRelease
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ebarcity-athletics-release-apk
+          path: android/app/build/outputs/apk/release/*.apk
+
+      - name: Upload AAB (Bundle for Cafe Bazaar & Myket) Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ebarcity-athletics-release-aab
+          path: android/app/build/outputs/bundle/release/*.aab`;
 
   const handleCopyCode = (content: string, key: string) => {
     navigator.clipboard.writeText(content);
@@ -71,10 +139,10 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
           <span>موتور اتوماتیک آماده‌سازی اندروید برای بازار و مایکت (الزامی بند ۲)</span>
         </div>
         <h2 className="text-xl sm:text-2xl font-bold text-white">
-          ساختار گریدل (Gradle)، مانیفست و اسکریپت ترموکس برای ردمی نوت ۸
+          ساختار گریدل (Gradle)، مانیفست، اتوماسیون گیت‌هاب و اسکریپت ترموکس برای ردمی نوت ۸
         </h2>
         <p className="text-xs text-zinc-300 mt-1 max-w-2xl leading-relaxed">
-          تمام فایل‌های لازم برای تبدیل این وب‌اپلیکیشن به فایل‌های APK و AAB قابل انتشار در استورهای کافه بازار و مایکت، به همراه کلیدهای امضای اختصاصی ریلیز به صورت خودکار فراهم شده است.
+          تمام فایل‌های لازم برای تبدیل این وب‌اپلیکیشن به فایل‌های APK و AAB قابل انتشار در استورهای کافه بازار و مایکت، به همراه کلیدهای امضای اختصاصی ریلیز و اکشن گیت‌هاب به صورت خودکار فراهم شده است.
         </p>
       </div>
 
@@ -121,7 +189,7 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
       {/* Code Tabs */}
       <div className="bg-[#121217] border border-zinc-800 rounded-2xl p-5 shadow-xl space-y-4">
         {/* Tab switchers */}
-        <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
+        <div className="flex flex-wrap items-center gap-2 border-b border-zinc-800 pb-3">
           <button
             onClick={() => setActiveSubTab('gradle')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
@@ -155,7 +223,19 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
             }`}
           >
             <Terminal className="w-3.5 h-3.5" />
-            <span>اسکریپت ترموکس (Termux Bash)</span>
+            <span>اسکریپت ترموکس (Termux)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveSubTab('github')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeSubTab === 'github'
+                ? 'bg-sky-500 text-black shadow-md'
+                : 'bg-zinc-800 text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>GitHub CI/CD Action</span>
           </button>
         </div>
 
@@ -166,6 +246,7 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
               {activeSubTab === 'gradle' && 'app/build.gradle'}
               {activeSubTab === 'manifest' && 'app/src/main/AndroidManifest.xml'}
               {activeSubTab === 'termux' && 'build_termux_redmi.sh'}
+              {activeSubTab === 'github' && '.github/workflows/android-release.yml'}
             </span>
 
             <div className="flex items-center gap-2">
@@ -176,7 +257,9 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
                       ? gradleContent
                       : activeSubTab === 'manifest'
                       ? manifestContent
-                      : termuxContent;
+                      : activeSubTab === 'termux'
+                      ? termuxContent
+                      : githubContent;
                   handleCopyCode(content, activeSubTab);
                 }}
                 className="flex items-center gap-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
@@ -192,13 +275,17 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
                       ? 'build.gradle'
                       : activeSubTab === 'manifest'
                       ? 'AndroidManifest.xml'
-                      : 'build_termux_redmi.sh';
+                      : activeSubTab === 'termux'
+                      ? 'build_termux_redmi.sh'
+                      : 'android-release.yml';
                   const content =
                     activeSubTab === 'gradle'
                       ? gradleContent
                       : activeSubTab === 'manifest'
                       ? manifestContent
-                      : termuxContent;
+                      : activeSubTab === 'termux'
+                      ? termuxContent
+                      : githubContent;
                   handleDownloadFile(filename, content);
                 }}
                 className="flex items-center gap-1 bg-[#d4af37]/20 border border-[#d4af37]/40 hover:bg-[#d4af37]/30 text-[#d4af37] px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
@@ -216,6 +303,7 @@ export const AndroidStoreExporter: React.FC<AndroidStoreExporterProps> = ({ whit
             {activeSubTab === 'gradle' && gradleContent}
             {activeSubTab === 'manifest' && manifestContent}
             {activeSubTab === 'termux' && termuxContent}
+            {activeSubTab === 'github' && githubContent}
           </pre>
         </div>
       </div>

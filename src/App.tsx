@@ -35,6 +35,9 @@ import { DualAuthModal } from './components/DualAuthModal.tsx';
 import { AdhdFocusTimerBar } from './components/AdhdFocusTimerBar.tsx';
 import { DeepMusclesAndPitchPresenter } from './components/DeepMusclesAndPitchPresenter.tsx';
 import { GlobalSearchAndGuideModal } from './components/GlobalSearchAndGuideModal.tsx';
+import { CentralHeroBanner } from './components/CentralHeroBanner.tsx';
+import { SportsJournalAndBlog } from './components/SportsJournalAndBlog.tsx';
+import { SportsAdSponsorHub } from './components/SportsAdSponsorHub.tsx';
 import { soundAndSpeech } from './utils/soundAndSpeech.ts';
 
 const DEFAULT_WHITE_LABEL: GymWhiteLabelConfig = {
@@ -218,6 +221,18 @@ export default function App() {
 
       {/* Main App Content Viewport */}
       <main className="max-w-7xl mx-auto px-4 py-6 md:py-8">
+        {/* Central Hero Banner (Muscle Anatomy & Platform Identity) */}
+        <CentralHeroBanner
+          whiteLabel={whiteLabel}
+          userProfile={userProfile}
+          onOpenPitchPresenter={() => {
+            setActiveTab('deep-muscles');
+            soundAndSpeech.playTick();
+          }}
+          onOpenSearch={() => setIsSearchModalOpen(true)}
+          onOpenVipMenu={() => setIsMobileMenuOpen(true)}
+        />
+
         {/* Four Seasons Top-Level Navigator */}
         <SeasonNavigator
           seasons={SEASONS_DATA}
@@ -330,6 +345,20 @@ export default function App() {
         {activeTab === 'loyalty' && (
           <LoyaltyLegends
             legends={INITIAL_LOYALTY_LEGENDS}
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+          />
+        )}
+
+        {activeTab === 'blog' && (
+          <SportsJournalAndBlog
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+          />
+        )}
+
+        {activeTab === 'ads' && (
+          <SportsAdSponsorHub
             userProfile={userProfile}
             setUserProfile={setUserProfile}
           />
