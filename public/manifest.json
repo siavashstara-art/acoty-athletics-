@@ -1,0 +1,27 @@
+{
+  "name": "دائرةالمعارف جهانی ورزش - FB NewMeta توانا سیتی",
+  "short_name": "باشگاه‌یار توانا",
+  "description": "اکوسیستم آفرینش آفرینا شهر جدید نیو متاورسی جهان ایبل سیتی (توانا سیتی) - FB NewMeta دائرةالمعارف جهانی ورزش و پلتفرم وایت‌لیبل باشگاهی",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#d4af37",
+  "orientation": "portrait-primary",
+  "lang": "fa",
+  "dir": "rtl",
+  "categories": ["sports", "health", "fitness", "education"],
+  "icons": [
+    {
+      "src": "/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "ir.ebarcity.athletics"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        manifestPlaceholders = [
+            bazaarAppId: "ir.ebarcity.athletics",
+            myketAppId: "ir.ebarcity.athletics"
+        ]
+    }
+
+    // تنظیمات امنیتی امضای Release (برای تولید فایل APK نهایی و معتبر)
+    signingConfigs {
+        release {
+            // خواندن امن اطلاعات امضا از متغیرهای محیطی یا فایل محلی امن
+            storeFile file("keystore/ebarcity-release-key.jks")
+            storePassword System.getenv("SIGNING_STORE_PASSWORD") ?: "default_password"
+            keyAlias System.getenv("SIGNING_KEY_ALIAS") ?: "ebarkey"
+            keyPassword System.getenv("SIGNING_KEY_PASSWORD") ?: "default_password"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.webkit:webkit:1.10.0'
+}
