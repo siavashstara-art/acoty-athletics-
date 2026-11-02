@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Web Dependencies & Build Web Project
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Decode Android Keystore File
@@ -57,7 +57,7 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD || 'default_password' }}
         run: |
           if [ -f "./gradlew" ]; then
-            ./gradlew assembleRelease bundleRelease
+            ./gradlew assembleRelease bundleRelease -Djava.awt.headless=true --no-daemon
           else
             echo "Gradle wrapper not initialised. Running fallback npx cap build / gradle build."
           fi

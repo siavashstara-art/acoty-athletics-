@@ -44,6 +44,7 @@ import { GymMusicPlayer } from './components/GymMusicPlayer.tsx';
 import { WeightCuttingProtocol } from './components/WeightCuttingProtocol.tsx';
 import { PersonalRecordsTracker } from './components/PersonalRecordsTracker.tsx';
 import { soundAndSpeech } from './utils/soundAndSpeech.ts';
+import { TehranGymPitchQuickBanner } from './components/TehranGymPitchQuickBanner.tsx';
 
 const DEFAULT_WHITE_LABEL: GymWhiteLabelConfig = {
   name: 'باشگاه جهانی رویال (وایت‌لیبل رسمی)',
@@ -107,7 +108,7 @@ export default function App() {
     }
   });
 
-  const [activeTab, setActiveTab] = useState<string>('deep-muscles');
+  const [activeTab, setActiveTab] = useState<string>('master-bank');
   const [activeSeasonId, setActiveSeasonId] = useState<SeasonId>('season-4');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -199,6 +200,18 @@ export default function App() {
       } ${fontClass}`}
       dir="rtl"
     >
+      {/* Tehran Gym Pitch Quick Selector Banner (Absolute Highest Top Position) */}
+      <TehranGymPitchQuickBanner
+        onSelectGym={(gymName, manager, coach, gymType) => {
+          setWhiteLabel(prev => ({
+            ...prev,
+            name: gymName,
+            coach: `${coach} (مدیریت: ${manager} - ${gymType})`,
+            address: 'تهران - اکوسیستم ایبل سیتی'
+          }));
+        }}
+      />
+
       {/* Official Header Stamp */}
       <HeaderStamp
         whiteLabel={whiteLabel}

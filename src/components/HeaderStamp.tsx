@@ -63,29 +63,23 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
   const primaryItems = [
-    { id: 'deep-muscles', label: '🫁 پرزنت حضوری باشگاه‌ها، قامت و چشم (اصلی)' },
-    { id: 'gym-music', label: '🎧 رادیو DJ و آهنگ‌های ورزشی بدون کپی‌رایت' },
-    { id: 'master-bank', label: '🏋️‍♂️🏆 مرجع جامع حرکات، پاورلیفتینگ و قهرمانان' },
-    { id: 'weight-cutting', label: '🤼‍♂️🥊 پروتکل علمی سر وزن آمدن کشتی و رزمی' },
+    { id: 'master-bank', label: '🏋️‍♂️🏆 مرجع جامع حرکات، پاورلیفتینگ و بدنسازی' },
     { id: 'pr-tracker', label: '📊🏆 ثبت رکوردهای ورزشی شخصی (PR Tracker)' },
-    { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و بازی‌های فکری (پیشگیری آلزایمر)' },
-    { id: 'blog', label: '📰 مجله و وبلاگ علمی تخصصی (جدید)' },
-    { id: 'ads', label: '📢 مرکز تبلیغات و اسپانسرینگ (جدید)' },
-    { id: 'whitelabel', label: '🏛️ تنظیمات برند و وایت‌لیبل باشگاه' },
-    { id: 'biomechanics', label: '🏋️ بیومکانیک، آناتومی و اهرم‌ها' },
-    { id: 'package1', label: '🛡️ پکیج آسیب‌شناسی و ارزیابی مفاصل' },
     { id: 'nutrition', label: '🍎 تغذیه تخصصی و متابولیسم سلولی' },
+    { id: 'weight-cutting', label: '🤼‍♂️🥊 پروتکل علمی سر وزن آمدن کشتی و رزمی' },
+    { id: 'gym-music', label: '🎧 رادیو DJ و آهنگ‌های ورزشی باشگاه' },
     { id: 'periodization', label: '⚡ سیستم‌های تمرینی و پیریودیزاسیون' },
     { id: 'encyclopedia', label: '📚 دائرةالمعارف ۱۶ حرکت بدنسازی' }
   ];
 
   const vipItems = [
-    { id: 'gym-music', label: '🎧 رادیو DJ آهنگ‌های هیجانی باشگاه (بدون کپی‌رایت)' },
+    { id: 'deep-muscles', label: '🫁 پرزنت حضوری باشگاه‌ها، حنجره، قامت و چشم' },
+    { id: 'gym-music', label: '🎧 رادیو DJ آهنگ‌های هیجانی باشگاه' },
     { id: 'weight-cutting', label: '🤼‍♂️🥊 پروتکل علمی سر وزن آمدن کشتی و رزمی' },
     { id: 'pr-tracker', label: '📊🏆 ثبت رکوردهای ورزشی شخصی (PR Tracker)' },
-    { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و ۴ بازی فکری (پیشگیری آلزایمر)' },
-    { id: 'blog', label: '📰 مجله علمی تخصصی (حقوق، روانشناسی، ترک اعتیاد)' },
-    { id: 'ads', label: '📢 جذب اسپانسرینگ، تجهیزات و برندهای مکمل' },
+    { id: 'brain-training', label: '🧠 باشگاه ورزش مغز و بازی‌های فکری' },
+    { id: 'blog', label: '📰 مجله علمی تخصصی ورزش و سلامت' },
+    { id: 'ads', label: '📢 جذب اسپانسرینگ و تجهیزات ورزشی' },
     { id: 'android', label: '📱 خروجی اتوماتیک اندروید (بازار و مایکت)' },
     { id: 'biochem', label: '🧪 بیوشیمی غدد و قوانین Anti-Doping WADA' },
     { id: 'package3', label: '📊 تکنولوژی، شبیه‌ساز ACWR و آنالیز' },
