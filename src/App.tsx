@@ -418,7 +418,6 @@ export default function App() {
           <BrainTrainingCenter
             userProfile={userProfile}
             setUserProfile={setUserProfile}
-            onGoToLoyalty={() => setActiveTab('loyalty')}
           />
         )}
 

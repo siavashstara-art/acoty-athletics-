@@ -23,7 +23,6 @@ import { soundAndSpeech } from '../utils/soundAndSpeech.ts';
 interface BrainTrainingCenterProps {
   userProfile: UserProfile;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
-  onGoToLoyalty?: () => void;
 }
 
 // Data structures for Stroop Game
@@ -94,8 +93,7 @@ const SPORTS_TRIVIA_QUESTIONS: SportsTriviaQuestion[] = [
 
 export const BrainTrainingCenter: React.FC<BrainTrainingCenterProps> = ({
   userProfile,
-  setUserProfile,
-  onGoToLoyalty
+  setUserProfile
 }) => {
   const [activeGame, setActiveGame] = useState<'stroop' | 'pattern' | 'math' | 'memory' | 'trivia'>('stroop');
   const [brainScore, setBrainScore] = useState<number>(350);

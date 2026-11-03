@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Web Dependencies & Build Web Project
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Decode Android Keystore File
