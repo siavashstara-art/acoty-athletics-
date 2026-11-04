@@ -45,6 +45,7 @@ import { WeightCuttingProtocol } from './components/WeightCuttingProtocol.tsx';
 import { PersonalRecordsTracker } from './components/PersonalRecordsTracker.tsx';
 import { soundAndSpeech } from './utils/soundAndSpeech.ts';
 import { TehranGymPitchQuickBanner } from './components/TehranGymPitchQuickBanner.tsx';
+import { EbarCityMasterBook } from './components/EbarCityMasterBook.tsx';
 
 const DEFAULT_WHITE_LABEL: GymWhiteLabelConfig = {
   name: 'باشگاه جهانی رویال (وایت‌لیبل رسمی)',
@@ -416,6 +417,14 @@ export default function App() {
 
         {activeTab === 'brain-training' && (
           <BrainTrainingCenter
+            userProfile={userProfile}
+            setUserProfile={setUserProfile}
+          />
+        )}
+
+        {activeTab === 'master-book' && (
+          <EbarCityMasterBook
+            adhdSettings={adhdSettings}
             userProfile={userProfile}
             setUserProfile={setUserProfile}
           />

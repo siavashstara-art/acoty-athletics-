@@ -63,6 +63,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
   const primaryItems = [
+    { id: 'master-book', label: '📖 کتاب مرجع بیومکانیک و بدنسازی پیشرفته (جدید)' },
     { id: 'master-bank', label: '🏋️‍♂️🏆 مرجع جامع حرکات، پاورلیفتینگ و بدنسازی' },
     { id: 'pr-tracker', label: '📊🏆 ثبت رکوردهای ورزشی شخصی (PR Tracker)' },
     { id: 'nutrition', label: '🍎 تغذیه تخصصی و متابولیسم سلولی' },
@@ -73,6 +74,7 @@ export const HeaderStamp: React.FC<HeaderStampProps> = ({
   ];
 
   const vipItems = [
+    { id: 'master-book', label: '📖 کتاب مرجع بیومکانیک و بدنسازی پیشرفته ایبلسیتی' },
     { id: 'deep-muscles', label: '🫁 پرزنت حضوری باشگاه‌ها، حنجره، قامت و چشم' },
     { id: 'gym-music', label: '🎧 رادیو DJ آهنگ‌های هیجانی باشگاه' },
     { id: 'weight-cutting', label: '🤼‍♂️🥊 پروتکل علمی سر وزن آمدن کشتی و رزمی' },
