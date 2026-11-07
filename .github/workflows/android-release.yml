@@ -68,7 +68,7 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD || 'default_password' }}
         run: |
           if [ -f "./gradlew" ]; then
-            ./gradlew assembleRelease bundleRelease -Djava.awt.headless=true --no-daemon
+            ./gradlew :app:assembleRelease :app:bundleRelease -Djava.awt.headless=true --no-daemon
           else
             echo "Gradle wrapper not initialised. Running fallback."
           fi
