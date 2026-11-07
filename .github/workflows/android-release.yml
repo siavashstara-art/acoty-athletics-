@@ -55,7 +55,7 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y gradle
           cd android
-          gradle wrapper --gradle-version 8.5
+          gradle wrapper --gradle-version 8.2
 
       - name: Grant Execute Permission for Gradle Wrapper
         run: chmod +x android/gradlew || chmod +x android/gradlew.bat || true
