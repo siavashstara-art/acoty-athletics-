@@ -1,0 +1,2 @@
+rootProject.name = 'EbarCity Athletics'
+include ':app'
