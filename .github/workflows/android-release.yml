@@ -30,6 +30,11 @@ jobs:
           npm install --legacy-peer-deps
           npm run build
 
+      - name: Copy Web Build to Android Assets
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp -r dist/* android/app/src/main/assets/
+
       - name: Decode Android Keystore File
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -46,6 +51,12 @@ jobs:
               -dname "CN=Akbar Alimiri, OU=EbarCity Athletics, O=FB NewMeta Tavana City, L=Tehran, C=IR"
           fi
 
+      - name: Install Gradle & Generate Wrapper
+        run: |
+          sudo apt-get update && sudo apt-get install -y gradle
+          cd android
+          gradle wrapper
+
       - name: Grant Execute Permission for Gradle Wrapper
         run: chmod +x android/gradlew || chmod +x android/gradlew.bat || true
 
@@ -59,14 +70,20 @@ jobs:
           if [ -f "./gradlew" ]; then
             ./gradlew assembleRelease bundleRelease -Djava.awt.headless=true --no-daemon
           else
-            echo "Gradle wrapper not initialised. Running fallback npx cap build / gradle build."
+            echo "Gradle wrapper not initialised. Running fallback."
           fi
 
-      - name: Upload APK Artifact
+      - name: Stage APK for Artifact Download
+        run: |
+          mkdir -p staged-apk
+          find android/app/build/outputs/apk/release -name "*.apk" -exec cp {} staged-apk/ebarcity-athletics-release.apk \;
+          ls -lh staged-apk/
+
+      - name: Upload Direct APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ebarcity-athletics-release-apk
-          path: android/app/build/outputs/apk/release/*.apk
+          path: staged-apk/ebarcity-athletics-release.apk
 
       - name: Upload AAB (Bundle for Cafe Bazaar & Myket) Artifact
         uses: actions/upload-artifact@v4
