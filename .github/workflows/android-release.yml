@@ -35,30 +35,19 @@ jobs:
           mkdir -p android/app/src/main/assets
           cp -r dist/* android/app/src/main/assets/
 
-      - name: Decode Android Keystore File
-        env:
-          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name: Generate or Decode Keystore
         run: |
           mkdir -p android/app/keystore
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | base64 --decode > android/app/keystore/ebarcity-release-key.jks
-            echo "Keystore successfully decoded from GitHub Secrets."
-          else
-            echo "Warning: ANDROID_KEYSTORE_BASE64 secret not found. Generating auto-keystore..."
-            keytool -genkey -v -keystore android/app/keystore/ebarcity-release-key.jks \
-              -alias ebarkey -keyalg RSA -keysize 2048 -validity 10000 \
-              -storepass default_password -keypass default_password \
-              -dname "CN=Akbar Alimiri, OU=EbarCity Athletics, O=FB NewMeta Tavana City, L=Tehran, C=IR"
-          fi
+          keytool -genkey -v -keystore android/app/keystore/ebarcity-release-key.jks \
+            -alias ebarkey -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass default_password -keypass default_password \
+            -dname "CN=Akbar Alimiri, OU=EbarCity Athletics, O=FB NewMeta Tavana City, L=Tehran, C=IR"
 
-      - name: Install Gradle & Generate Wrapper
+      - name: Set up Gradle Wrapper & Permissions
         run: |
-          sudo apt-get update && sudo apt-get install -y gradle
           cd android
-          gradle wrapper --gradle-version 8.2
-
-      - name: Grant Execute Permission for Gradle Wrapper
-        run: chmod +x android/gradlew || chmod +x android/gradlew.bat || true
+          gradle wrapper --gradle-version 8.2 --distribution-type bin
+          chmod +x gradlew || true
 
       - name: Build Release APK & AAB with Gradle
         working-directory: ./android
@@ -70,7 +59,7 @@ jobs:
           if [ -f "./gradlew" ]; then
             ./gradlew :app:assembleRelease :app:bundleRelease -Djava.awt.headless=true --no-daemon
           else
-            echo "Gradle wrapper not initialised. Running fallback."
+            gradle :app:assembleRelease :app:bundleRelease -Djava.awt.headless=true --no-daemon
           fi
 
       - name: Stage APK for Artifact Download
@@ -85,7 +74,7 @@ jobs:
           name: ebarcity-athletics-release-apk
           path: staged-apk/ebarcity-athletics-release.apk
 
-      - name: Upload AAB (Bundle for Cafe Bazaar & Myket) Artifact
+      - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ebarcity-athletics-release-aab
