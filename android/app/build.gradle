@@ -5,6 +5,7 @@ plugins {
 
 android {
     compileSdk 34
+    namespace "ir.ebarcity.athletics"
 
     defaultConfig {
         applicationId "ir.ebarcity.athletics"
